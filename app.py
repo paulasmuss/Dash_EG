@@ -9,46 +9,44 @@ import pandas as pd
 app = dash.Dash(__name__)
 server = app.server  # expose server variable for Procfile
 
-df = pd.read_excel("assets/GuVAuszug_RandomDatenExport.xlsx")
-df = df.drop(columns= ['Sortierung_3'])
+df = px.data.stocks()
 
 app.layout = ddk.App([
     ddk.Header([
-        #ddk.Logo(src=app.get_asset_url('logo.png')),
-        ddk.Title('Test GuV (randomisierte Daten)'),
+        ddk.Logo(src=app.get_asset_url('logo.png')),
+        ddk.Title('Dash Enterprise Sample Application'),
     ]),
     ddk.Row(children=[
         ddk.Card(children=[
             ddk.CardHeader(children=[
-                ddk.SectionTitle("Geschäftsjahr auswählen"), 
-                dcc.Checklist(
-                    id="choosen_year",
-                    options=[{"label": x, "value": x}
-                             for x in df['Jahr'].unique().tolist()],
-                    value=[],
+                dcc.Dropdown(
+                    id='title-dropdown',
+                    options=[{'label': i, 'value': i}
+                        for i in ['GOOG', 'AAPL', 'AMZN']],
+                    value='GOOG'
                 )
             ]),
             ddk.Graph(id='update-graph', style={'height':300}),
         ]),
     ]),
 
-    #ddk.Row(children=[
-     #   ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AMZN", "FB"], title='Stock Prices Crap'))),
-#
- #       ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AAPL", "MSFT"], title='Stock Prices Others')))
-  #  ])
+    ddk.Row(children=[
+        ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AMZN", "FB"], title='Stock Prices'))),
+
+        ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AAPL", "MSFT"], title='Stock Prices')))
+    ])
 ])
+
 
 @app.callback(Output('update-graph', 'figure'),
               [Input('title-dropdown', 'value')])
-
 def update_graph(value):
     if value == 'GOOG':
-        return px.line(df, x="date", y="GOOG", title='goggles Stock Price')
+        return px.line(df, x="date", y="GOOG", title='Google Stock Price')
     elif value == 'AAPL':
-        return px.line(df, x="date", y="AAPL", title='Pear Stock Price')
+        return px.line(df, x="date", y="AAPL", title='Apple Stock Price')
     elif value == 'AMZN':
-        return px.line(df, x="date", y="AMZN", title='Amazon Chicken Stock Price')
+        return px.line(df, x="date", y="AMZN", title='Amazon Stock Price')
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=6667, proxy="http://0.0.0.0:6667::https://dash-signal-iduna.plotly.host")
