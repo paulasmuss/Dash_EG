@@ -13,7 +13,7 @@ df = px.data.stocks()
 
 app.layout = ddk.App([
     ddk.Header([
-        ddk.Logo(src=app.get_asset_url('logo.png')),
+        #ddk.Logo(src=app.get_asset_url('logo.png')),
         ddk.Title('Dash Enterprise Sample Application'),
     ]),
     ddk.Row(children=[
@@ -42,7 +42,7 @@ app.layout = ddk.App([
               [Input('title-dropdown', 'value')])
 def update_graph(value):
     if value == 'GOOG':
-        return px.line(df, x="date", y="GOOG", title='Google Stock Price')
+        return px.line(df, x="date", y="GOOG", title='goggles Stock Price')
     elif value == 'AAPL':
         return px.line(df, x="date", y="AAPL", title='Apple Stock Price')
     elif value == 'AMZN':
