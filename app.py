@@ -42,9 +42,9 @@ def update_graph(chosen_year):
     df_1 = df.groupby(['Jahr']).sum()
     df_1 = df_1.loc[chosen_year]
 
-    #df_2 = df.groupby(['Jahr', 'Ebene1']).sum()
-    #df_2 = df_2.unstack()
-    #df_2.columns = df_2.columns.droplevel()
+    df_2 = df.groupby(['Jahr', 'Ebene1']).sum()
+    df_2 = df_2.unstack()
+    df_2.columns = df_2.columns.droplevel()
         
     x_label = ['Verdiente Beiträge <br>für eigene Rechnung',
                'Beiträge aus der<br> Brutto-Rückstellung <br>für Beitragsrückerst.',
@@ -60,15 +60,12 @@ def update_graph(chosen_year):
                'Sonstige <br>versicherungstechnische <br>Aufwendungen f.e.R.',
                'Versicherungstechnisches <br>Ergebnis für eigene Rechnung' ]
 
-    #fig_2 = go.Figure()
-    #for jahr in choosen_year:
-    #    fig_2.add_trace(go.Bar(name=jahr, x=x_label, y=df_2.loc[int(jahr)]))
-    #fig_2.update_layout(barmode='group', xaxis_tickangle=0)
+    fig_2 = go.Figure()
+    for jahr in choosen_year:
+        fig_2.add_trace(go.Bar(name=jahr, x=x_label, y=df_2.loc[int(jahr)]))
+    fig_2.update_layout(barmode='group', xaxis_tickangle=0)
 
-    return [
-        px.bar(x=df_1.index, y=df_1['Betrag'])
-        #dcc.Graph(figure=fig_2)
-    ]
+    return px.bar(x=df_1.index, y=df_1['Betrag'])
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=6667, proxy="http://0.0.0.0:6667::https://dash-signal-iduna.plotly.host")
