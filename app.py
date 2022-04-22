@@ -27,7 +27,7 @@ app.layout = ddk.App([
                              for x in df['Jahr'].unique().tolist()],
                     value=[],
                     inline=True,
-                    style={'padding': '50px'}
+                    style={'padding': '500px'}
                 )
             ]),
             ddk.Graph(id='update-graph', style={'height':300}),
