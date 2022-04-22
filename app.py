@@ -26,9 +26,9 @@ app.layout = ddk.App([
                     options=[{'label': x, 'value': x, 'title': 'Auswahl Geschäftsjahr'}
                              for x in df['Jahr'].unique().tolist()],
                     value=[],
-                    inline=True
-                ),
-                style={'marginRight': '1000'}
+                    inline=True,
+                    style={'marginRight': 1000}
+                )
             ]),
             ddk.Graph(id='update-graph', style={'height':300}),
         ]),
