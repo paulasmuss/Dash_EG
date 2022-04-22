@@ -9,7 +9,9 @@ import pandas as pd
 app = dash.Dash(__name__)
 server = app.server # expose server variable for Procfile
 
-df = px.data.stocks()
+#df = px.data.stocks()
+df = pd.read_excel("assets/GuVAuszug_RandomDatenExport.xlsx")
+df = df.drop(columns= ['Sortierung_3'])
 
 app.layout = ddk.App([
     ddk.Header([
@@ -21,9 +23,9 @@ app.layout = ddk.App([
             ddk.CardHeader(title='Geschäftsjahr auswählen', children=[
                 dcc.Dropdown(
                     id='chosen_year',
-                    options=[{'label': i, 'value': i}
-                        for i in ['GOOG', 'AAPL', 'AMZN']],
-                    value='GOOG'
+                    options=[{'label': x, 'value': x}
+                        for x in df['Jahr'].unique().tolist()],
+                    value=[]
                 )
             ]),
             ddk.Graph(id='update-graph', style={'height':300}),
@@ -41,12 +43,13 @@ app.layout = ddk.App([
 @app.callback(Output('update-graph', 'figure'),
               [Input('chosen_year', 'value')])
 def update_graph(value):
-    if value == 'GOOG':
-        return px.line(df, x="date", y="GOOG", title='goggles Stock Price')
-    elif value == 'AAPL':
-        return px.line(df, x="date", y="AAPL", title='Apple Stock Price')
-    elif value == 'AMZN':
-        return px.line(df, x="date", y="AMZN", title='Amazon Stock Price')
+    print(chosen_year)
+    #if value == 'GOOG':
+    #    return px.line(df, x="date", y="GOOG", title='goggles Stock Price')
+    #elif value == 'AAPL':
+    #    return px.line(df, x="date", y="AAPL", title='Apple Stock Price')
+    #elif value == 'AMZN':
+    #    return px.line(df, x="date", y="AMZN", title='Amazon Stock Price')
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=6667, proxy="http://0.0.0.0:6667::https://dash-signal-iduna.plotly.host")
