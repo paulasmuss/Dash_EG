@@ -38,7 +38,7 @@ app.layout = ddk.App([
 ])
 
 
-@app.callback(Output('update-graph'),
+@app.callback(Output('update-graph', 'children'),
               [Input('chosen_year', 'value')])
 def update_graph(value):
     if value == 'GOOG':
