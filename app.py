@@ -20,8 +20,9 @@ app.layout = ddk.App([
     ]),
     ddk.Row(children=[
         ddk.Card(children=[
-            ddk.CardHeader(title='Geschäftsjahr auswählen', children=[
+            ddk.CardHeader(children=[
                 dcc.Checklist(
+                    title='Geschäftsjahr auswählen',
                     id='chosen_year',
                     options=[{'label': x, 'value': x}
                              for x in df['Jahr'].unique().tolist()],
