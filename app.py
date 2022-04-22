@@ -21,7 +21,7 @@ app.layout = ddk.App([
     ddk.Row(children=[
         ddk.Card(children=[
             ddk.CardHeader(title='Geschäftsjahr auswählen', children=[
-                dcc.Dropdown(
+                dcc.Checklist(
                     id='chosen_year',
                     options=[{'label': x, 'value': x}
                              for x in df['Jahr'].unique().tolist()],
@@ -44,6 +44,8 @@ app.layout = ddk.App([
               [Input('chosen_year', 'value')])
 def update_graph(chosen_year):
     print(chosen_year)
+    chosen_year.sort()
+    print('sorted: ', chosen_year)
     #if value == 'GOOG':
     #    return px.line(df, x="date", y="GOOG", title='goggles Stock Price')
     #elif value == 'AAPL':
