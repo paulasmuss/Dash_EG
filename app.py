@@ -30,14 +30,8 @@ app.layout = ddk.App([
                     )
             ]),
             ddk.Graph(id='update-graph', style={'height':300}),
-        ]),
-    ]),
-
-    #ddk.Row(children=[
-    #    ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AMZN", "FB"], title='Storck Prices'))),
-#
-    #    ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AAPL", "MSFT"], title='Stock Prices')))
-    #])
+        ])
+    ])
 ])
 
 
@@ -47,14 +41,36 @@ def update_graph(chosen_year):
     chosen_year.sort()
     df_1 = df.groupby(['Jahr']).sum()
     df_1 = df_1.loc[chosen_year]
-    return px.bar(x=df_1.index, y=df_1['Betrag'])
 
-    #if value == 'GOOG':
-    #    return px.line(df, x="date", y="GOOG", title='goggles Stock Price')
-    #elif value == 'AAPL':
-    #    return px.line(df, x="date", y="AAPL", title='Apple Stock Price')
-    #elif value == 'AMZN':
-    #    return px.line(df, x="date", y="AMZN", title='Amazon Stock Price')
+    df_2 = df.groupby(['Jahr', 'Ebene1']).sum()
+    df_2 = df_2.unstack()
+    df_2.columns = df_2.columns.droplevel()
+        
+    x_label = ['Verdiente Beiträge <br>für eigene Rechnung',
+               'Beiträge aus der<br> Brutto-Rückstellung <br>für Beitragsrückerst.',
+               'Erträge <br> aus Kapitalanlagen',
+               'Nicht realisierte <br>Gewinne aus <br>Kapitalanlagen',
+               'Sonstige <br>versicherungstechnische <br>Erträge f.e.R.',
+               'Aufwendungenfür <br>Versicherungsfälle <br>für eigene Rechnung',
+               'Veränder. <br>der übr. <br>versicherungstechn. <br>Netto-Rückstellungen'
+               'Aufw. für <br> erfolgsabh.und<br> erfolgsunabh. <br>Beitragsrückerst. <br> f.e.R.',
+               'Aufwendungen für <br>den <br>Versicherungsbetrieb <br>f.e.R.',
+               'Aufwendungen für <br>Kapitalanlagen',
+               'Nicht realisierte <br>Verluste aus Kapitalanlagen',
+               'Sonstige <br>versicherungstechnische <br>Aufwendungen f.e.R.',
+               'Versicherungstechnisches <br>Ergebnis für eigene Rechnung' ]
+
+    fig_2 = px.Figure()
+    for jahr in choosen_year:
+        fig_2.add_trace(go.Bar(name=jahr, x=x_label, y=df_2.loc[int(jahr)]))
+             
+    # Change the bar mode
+    fig_2.update_layout(barmode='group', xaxis_tickangle=0)
+
+    return [
+        px.bar(x=df_1.index, y=df_1['Betrag']),
+        dcc.Graph(figure=fig_2)
+    ]
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=6667, proxy="http://0.0.0.0:6667::https://dash-signal-iduna.plotly.host")
