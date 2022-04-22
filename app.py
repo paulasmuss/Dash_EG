@@ -26,9 +26,8 @@ app.layout = ddk.App([
                     options=[{'label': x, 'value': x, 'title': 'Auswahl Geschäftsjahr'}
                              for x in df['Jahr'].unique().tolist()],
                     value=[],
-                    inline=True,
-                    style={'align': 'center'}
-                )
+                    inline=True
+                    )
             ]),
             ddk.Graph(id='update-graph', style={'height':300}),
         ]),
@@ -48,8 +47,9 @@ def update_graph(chosen_year):
     chosen_year.sort()
     df_1 = df.groupby(['Jahr']).sum()
     df_1 = df_1.loc[chosen_year]
-    fig_1 = go.Figure([go.Bar(x=df_1.index, y=df_1['Betrag'])])
+    fig_1 = go.Bar(x=df_1.index, y=df_1['Betrag'])
     fig_1.update_layout(xaxis = dict(dtick = 1))
+    return html.Div([dcc.Graph(figure=fig_1)]
 
     #if value == 'GOOG':
     #    return px.line(df, x="date", y="GOOG", title='goggles Stock Price')
