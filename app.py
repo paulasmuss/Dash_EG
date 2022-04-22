@@ -60,14 +60,14 @@ def update_graph(chosen_year):
                'Sonstige <br>versicherungstechnische <br>Aufwendungen f.e.R.',
                'Versicherungstechnisches <br>Ergebnis für eigene Rechnung' ]
 
-    fig_2 = go.Figure()
-    for jahr in choosen_year:
-        fig_2.add_trace(go.Bar(name=jahr, x=x_label, y=df_2.loc[int(jahr)]))
-    fig_2.update_layout(barmode='group', xaxis_tickangle=0)
+    #fig_2 = go.Figure()
+    #for jahr in choosen_year:
+    #    fig_2.add_trace(go.Bar(name=jahr, x=x_label, y=df_2.loc[int(jahr)]))
+    #fig_2.update_layout(barmode='group', xaxis_tickangle=0)
 
     return [
         px.bar(x=df_1.index, y=df_1['Betrag']),
-        dcc.Graph(figure=fig_2)
+        #dcc.Graph(figure=fig_2)
     ]
 
 if __name__ == '__main__':
