@@ -24,8 +24,8 @@ app.layout = ddk.App([
                 dcc.Dropdown(
                     id='chosen_year',
                     options=[{'label': x, 'value': x}
-                        for x in df['Jahr'].unique().tolist()],
-                    value=[]
+                             for x in df['Jahr'].unique().tolist()],
+                    value=[],
                 )
             ]),
             ddk.Graph(id='update-graph', style={'height':300}),
