@@ -20,7 +20,7 @@ app.layout = ddk.App([
         ddk.Card(children=[
             ddk.CardHeader(title='Geschäftsjahr auswählen', children=[
                 dcc.Dropdown(
-                    id='title-dropdown',
+                    id='chosen_year',
                     options=[{'label': i, 'value': i}
                         for i in ['GOOG', 'AAPL', 'AMZN']],
                     value='GOOG'
@@ -30,16 +30,16 @@ app.layout = ddk.App([
         ]),
     ]),
 
-    ddk.Row(children=[
-        ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AMZN", "FB"], title='Storck Prices'))),
-
-        ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AAPL", "MSFT"], title='Stock Prices')))
-    ])
+    #ddk.Row(children=[
+    #    ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AMZN", "FB"], title='Storck Prices'))),
+#
+    #    ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AAPL", "MSFT"], title='Stock Prices')))
+    #])
 ])
 
 
-@app.callback(Output('update-graph', 'figure'),
-              [Input('title-dropdown', 'value')])
+@app.callback(Output('update-graph'),
+              [Input('chosen_year', 'value')])
 def update_graph(value):
     if value == 'GOOG':
         return px.line(df, x="date", y="GOOG", title='goggles Stock Price')
