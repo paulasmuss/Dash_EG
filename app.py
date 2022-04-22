@@ -14,11 +14,11 @@ df = px.data.stocks()
 app.layout = ddk.App([
     ddk.Header([
         #ddk.Logo(src=app.get_asset_url('logo.png')),
-        ddk.Title('Dash Enterprise Sample Application'),
+        ddk.Title('Test GuV: Randomisierte Dateneinträge'),
     ]),
     ddk.Row(children=[
         ddk.Card(children=[
-            ddk.CardHeader(children=[
+            ddk.CardHeader(title='Geschäftsjahr auswählen', children=[
                 dcc.Dropdown(
                     id='title-dropdown',
                     options=[{'label': i, 'value': i}
