@@ -23,9 +23,10 @@ app.layout = ddk.App([
             ddk.CardHeader(title='Geschäftsjahr auswählen', children=[
                 dcc.Checklist(
                     id='chosen_year',
-                    options=[{'label': x, 'value': x}
+                    options=[{'label': x, 'value': x, 'title': 'Auswahl Geschäftsjahr'}
                              for x in df['Jahr'].unique().tolist()],
                     value=[],
+                    inline=True
                 )
             ]),
             ddk.Graph(id='update-graph', style={'height':300}),
