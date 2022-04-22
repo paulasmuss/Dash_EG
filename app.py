@@ -7,7 +7,7 @@ import plotly.express as px
 import pandas as pd
 
 app = dash.Dash(__name__)
-server = app.server  # expose server variable for Procfile
+server = app.server # expose server variable for Procfile
 
 df = px.data.stocks()
 
@@ -31,7 +31,7 @@ app.layout = ddk.App([
     ]),
 
     ddk.Row(children=[
-        ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AMZN", "FB"], title='Stock Prices'))),
+        ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AMZN", "FB"], title='Storck Prices'))),
 
         ddk.Card(width=50, children=ddk.Graph(figure=px.line(df, x="date", y=["AAPL", "MSFT"], title='Stock Prices')))
     ])
