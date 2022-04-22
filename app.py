@@ -42,7 +42,7 @@ app.layout = ddk.App([
 
 @app.callback(Output('update-graph', 'figure'),
               [Input('chosen_year', 'value')])
-def update_graph(value):
+def update_graph(chosen_year):
     print(chosen_year)
     #if value == 'GOOG':
     #    return px.line(df, x="date", y="GOOG", title='goggles Stock Price')
